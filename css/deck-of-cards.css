@@ -1,0 +1,24 @@
+.container {
+    width: 1000px;
+    height: 75vh;
+}
+
+img {
+    width: 175px;
+}
+
+button {
+    width: 300px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 5px 20px;
+    border-radius: 10px;
+    background-color: #A11;
+    color: white;
+    cursor: pointer;
+    margin-top: 60px;
+}
+
+button:hover {
+    background-color: #B33;
+}

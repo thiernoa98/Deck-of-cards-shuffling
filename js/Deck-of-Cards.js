@@ -1,6 +1,6 @@
 const kinds = ['2','3','4','5','6','7','8','9','10','Jack','Queen','King', 'Ace'];
 const suits = ['Diamonds', 'Hearts', 'Spades', 'Clubs'];
-const deck = []; // a new array to save the cards to
+const deck = []; 
 
 //8. Setting up a nested loop for type of cards;
 for (let k = 0; k < kinds.length; k++) {
@@ -13,28 +13,45 @@ for (let k = 0; k < kinds.length; k++) {
 
 
 const btn = document.querySelector('button');
-btn.addEventListener('click', dealCards)
+btn.addEventListener('click', dealShuffledCards);
 const imgArr = document.querySelectorAll('#card-box img'); 
 const cardBox = document.getElementById('card-box');
 
 //make a copy so tha when it's spliced out/cut out, we have a new copy
-// let deckCopy = [...deck]; //works
 let deckCopy = deck.slice(0);
 
-function dealCards() {
-    cardBox.innerHTML= "";
-   for (let i =0; i < imgArr.length; i++) {
-        //randomize the cards picks
-        let r = Math.floor(Math.random() * deckCopy.length);
-        cardBox.innerHTML += `<img src="images/${deckCopy[r]}.png">`;
+//loop through and shuffle the deck
+function shuffleDeck(deck){
+    for (let i = 0; i < deck.length; i++) {
+        //get a copy of the array
+        let currentItemCopy = deck[i];
+        //generat the integer in the range of the array
+        let r = Math.floor(Math.random() * deck.length);
+        
+        //replace current item with the new
+        deck[i] = deck[r];
 
-        //splice/cut so that can't get two cards/repeat
-        deckCopy.splice(r,1);
+        //replace the random item 
+        deck[r] = currentItemCopy;
+    }
+    return deck;
+}
+
+
+function dealShuffledCards() {
+   for (let i =0; i < imgArr.length; i++) {
+
+        let card = deckCopy.pop(); 
+        console.log(card);
+        
+       imgArr[i].src = `images/${card}.png`;
 
         //when there are two cards left then bring the deckCopy
-        if (deckCopy.length == 2) {
-            deckCopy = [...deck]; //recollect the deck //the original
+        if (deckCopy.length == 2 ) {
+            //if we run out of cards, call the shuffleDeck to suffle deck again
+            deckCopy = shuffleDeck([...deck]);
         }
    } 
-   return cardBox;
+   return deckCopy;
 }
+
